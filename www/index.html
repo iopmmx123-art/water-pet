@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4fb3f6">
+<title>汪喵喝水</title>
+<style>
+:root{--bg:#dff2ff;--card:#fff;--ink:#2f4a63;--sub:#6f8fa8;--pri:#4fb3f6;--water:#2a9df4;--line:#c3e4fa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13283b;--card:#1c3650;--ink:#e6f4ff;--sub:#8fb0c9;--line:#2b4a68}}
+:root[data-theme="dark"]{--bg:#13283b;--card:#1c3650;--ink:#e6f4ff;--sub:#8fb0c9;--line:#2b4a68}
+*{box-sizing:inherit;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Noto Sans SC",system-ui,sans-serif;display:flex;justify-content:center}
+main{width:100%;max-width:460px;padding:16px 16px 40px}
+h1{font-size:22px;text-align:center;margin:4px 0 0}
+.sub{text-align:center;color:var(--sub);font-size:13px;margin:4px 0 10px;min-height:20px}
+.hero{display:flex;align-items:center;justify-content:space-between}
+.pet{width:76px;height:76px;animation:bob 3s ease-in-out infinite}
+.pet.r{animation-delay:1.5s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(3deg)}}
+.ring{position:relative;width:190px;height:190px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .t{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.big{font-size:40px;font-weight:800;color:var(--water)}
+.big small{font-size:16px}
+.goal{font-size:13px;color:var(--sub)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.btn{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:10px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink);font:inherit;cursor:pointer;transition:transform .12s}
+.btn:active{transform:scale(.93);border-color:var(--pri)}
+.btn svg{width:76px;height:76px}
+.btn b{font-size:20px}.btn span{font-size:12px;color:var(--sub)}
+.card{background:var(--card);border-radius:22px;padding:14px 16px;margin-bottom:12px}
+.card h2{font-size:15px;margin:0 0 8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px;padding:4px 0}
+.log{max-height:150px;overflow-y:auto}
+.mini{background:var(--line);border:0;border-radius:14px;padding:6px 12px;color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+input[type=number],select{background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:4px 8px;font:inherit;font-size:14px;width:84px}
+.pop{position:fixed;left:50%;top:38%;font-size:34px;font-weight:800;color:var(--water);pointer-events:none;transform:translateX(-50%);animation:up 1s forwards;text-shadow:0 2px 0 #fff}
+@keyframes up{to{transform:translate(-50%,-90px);opacity:0}}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120px);background:var(--pri);color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;transition:.3s;max-width:90%}
+#toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="cat" viewBox="0 0 100 100">
+<path d="M14 42 L18 8 L45 26Z" fill="#f6a96b"/><path d="M86 42 L82 8 L55 26Z" fill="#f6a96b"/>
+<path d="M21 30 L22 17 L34 25Z" fill="#ffb3c1"/><path d="M79 30 L78 17 L66 25Z" fill="#ffb3c1"/>
+<ellipse cx="50" cy="58" rx="40" ry="34" fill="#ffc98b"/>
+<path d="M44 26 h12 M40 31 h20" stroke="#f6a96b" stroke-width="4" stroke-linecap="round"/>
+<circle cx="34" cy="56" r="5.5" fill="#4a3030"/><circle cx="66" cy="56" r="5.5" fill="#4a3030"/>
+<circle cx="36" cy="54" r="1.8" fill="#fff"/><circle cx="68" cy="54" r="1.8" fill="#fff"/>
+<circle cx="22" cy="68" r="6" fill="#ff9eb5" opacity=".6"/><circle cx="78" cy="68" r="6" fill="#ff9eb5" opacity=".6"/>
+<path d="M45 64 h10 l-5 6z" fill="#ff7f9a"/>
+<path d="M50 70 q-5 7 -11 2 M50 70 q5 7 11 2" stroke="#4a3030" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M4 58 l16 3 M4 70 l16-3 M96 58 l-16 3 M96 70 l-16-3" stroke="#a5775a" stroke-width="2" stroke-linecap="round"/>
+</symbol>
+<symbol id="dog" viewBox="0 0 100 100">
+<ellipse cx="14" cy="46" rx="12" ry="26" fill="#a9744f" transform="rotate(18 14 46)"/>
+<ellipse cx="86" cy="46" rx="12" ry="26" fill="#a9744f" transform="rotate(-18 86 46)"/>
+<ellipse cx="50" cy="56" rx="36" ry="34" fill="#f5dcb4"/>
+<ellipse cx="68" cy="46" rx="14" ry="12" fill="#c98f62"/>
+<circle cx="34" cy="50" r="5.5" fill="#4a3030"/><circle cx="68" cy="50" r="5.5" fill="#4a3030"/>
+<circle cx="36" cy="48" r="1.8" fill="#fff"/><circle cx="70" cy="48" r="1.8" fill="#fff"/>
+<ellipse cx="50" cy="68" rx="16" ry="12" fill="#fff"/>
+<ellipse cx="50" cy="62" rx="7" ry="5" fill="#4a3030"/>
+<path d="M50 67 v5 M50 72 q-6 6 -12 1 M50 72 q6 6 12 1" stroke="#4a3030" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M45 76 q5 12 10 0z" fill="#ff7f9a"/>
+<circle cx="22" cy="66" r="5" fill="#ff9eb5" opacity=".6"/><circle cx="78" cy="66" r="5" fill="#ff9eb5" opacity=".6"/>
+</symbol>
+<symbol id="face" viewBox="0 0 80 90"><circle cx="31" cy="54" r="3.2" fill="#4a3030"/><circle cx="49" cy="54" r="3.2" fill="#4a3030"/><circle cx="26" cy="61" r="3.5" fill="#ff9eb5" opacity=".7"/><circle cx="54" cy="61" r="3.5" fill="#ff9eb5" opacity=".7"/><path d="M36 60 q4 4 8 0" stroke="#4a3030" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<main>
+  <h1>汪喵喝水 🐾</h1>
+  <div class="sub" id="msg"></div>
+  <div class="hero">
+    <svg class="pet"><use href="#dog"/></svg>
+    <div class="ring">
+      <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" fill="none" stroke="var(--line)" stroke-width="16"/>
+        <circle id="arc" cx="100" cy="100" r="84" fill="none" stroke="var(--water)" stroke-width="16" stroke-linecap="round" stroke-dasharray="528" stroke-dashoffset="528" style="transition:stroke-dashoffset .6s"/></svg>
+      <div class="t"><div class="goal">今日已喝</div><div class="big"><span id="total">0</span><small> ml</small></div><div class="goal" id="goalTxt"></div></div>
+    </div>
+    <svg class="pet r"><use href="#cat"/></svg>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="card"><h2>🐶 今日记录</h2><div class="log" id="log"></div>
+    <div class="row"><button class="mini" id="undo">↩ 撤销上一杯</button><button class="mini" id="reset">清零今天</button></div></div>
+
+  <div class="card"><h2>🐱 设置</h2>
+    <div class="row">每日目标 <span><input type="number" id="goal" min="500" max="6000" step="100"> ml</span></div>
+    <div class="row">喝水提醒 <select id="rem"><option value="0">关闭</option><option value="30">每30分钟</option><option value="45">每45分钟</option><option value="60">每60分钟</option><option value="90">每90分钟</option><option value="120">每2小时</option></select></div>
+    <div class="goal" style="margin-top:4px">提醒需每天 8:00–22:00 按所选间隔提醒，App关闭后也会提醒。</div>
+  </div>
+</main>
+<div id="toast"></div>
+
+<script>
+const K='water-pet-v1';
+const SIZES=[
+ {ml:150,name:'小奶杯',svg:`<svg viewBox="0 0 80 90"><path d="M16 34 L22 18 L34 30Z M64 34 L58 18 L46 30Z" fill="#f6a96b"/><path d="M64 44 q18 2 -4 22" stroke="#5aa9e6" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M14 32 H66 L60 76 Q59 84 50 84 H30 Q21 84 20 76Z" fill="#cfeeff" stroke="#5aa9e6" stroke-width="3.5" stroke-linejoin="round"/><use href="#face" width="80" height="90"/></svg>`},
+ {ml:250,name:'玻璃杯',svg:`<svg viewBox="0 0 80 90"><ellipse cx="14" cy="34" rx="9" ry="16" fill="#a9744f" transform="rotate(20 14 34)"/><ellipse cx="66" cy="34" rx="9" ry="16" fill="#a9744f" transform="rotate(-20 66 34)"/><path d="M16 24 H64 L58 80 Q57 86 50 86 H30 Q23 86 22 80Z" fill="#cfeeff" stroke="#5aa9e6" stroke-width="3.5" stroke-linejoin="round"/><path d="M19 40 H61" stroke="#6ec1f5" stroke-width="3" opacity=".6"/><use href="#face" width="80" height="90"/></svg>`},
+ {ml:350,name:'马克杯',svg:`<svg viewBox="0 0 80 90"><path d="M14 30 L18 12 L32 26Z M54 30 L50 12 L36 26Z" fill="#f6a96b" transform="translate(0 0)"/><path d="M58 40 q20 0 20 16 q0 16 -20 14" stroke="#ff9eb5" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="10" y="26" width="50" height="58" rx="14" fill="#ffd6e0" stroke="#ff9eb5" stroke-width="3.5"/><g transform="translate(-5 0)"><use href="#face" width="80" height="90"/></g></svg>`},
+ {ml:500,name:'运动水壶',svg:`<svg viewBox="0 0 80 90"><ellipse cx="22" cy="30" rx="8" ry="15" fill="#a9744f" transform="rotate(25 22 30)"/><ellipse cx="58" cy="30" rx="8" ry="15" fill="#a9744f" transform="rotate(-25 58 30)"/><rect x="32" y="4" width="16" height="12" rx="4" fill="#5aa9e6"/><rect x="18" y="14" width="44" height="72" rx="16" fill="#cfeeff" stroke="#5aa9e6" stroke-width="3.5"/><path d="M21 48 H59 V70 Q59 83 46 83 H34 Q21 83 21 70Z" fill="#6ec1f5" opacity=".45"/><use href="#face" width="80" height="90"/></svg>`}
+];
+const MSG=[[0,'今天还没喝水哦，快来一杯吧～'],[.3,'汪！开了个好头，继续加油！'],[.6,'喵～过半啦，你真棒！'],[.9,'马上达标，再来一小口！'],[1,'🎉 今日目标达成！汪喵给你比心～']];
+let st,last=Date.now();
+const $=id=>document.getElementById(id);
+const day=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+function load(){try{st=JSON.parse(localStorage.getItem(K))||{}}catch(e){st={}}
+ if(st.date!==day()){st.date=day();st.log=[]}st.goal=st.goal||2000;st.rem=st.rem||0;st.log=st.log||[]}
+function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),3500)}
+function render(){
+ const total=st.log.reduce((a,b)=>a+b.ml,0),p=Math.min(1,total/st.goal);
+ $('total').textContent=total;$('goalTxt').textContent='目标 '+st.goal+' ml · '+Math.round(total/st.goal*100)+'%';
+ $('arc').style.strokeDashoffset=528*(1-p);
+ $('msg').textContent=[...MSG].reverse().find(m=>p>=m[0])[1];
+ $('log').innerHTML=st.log.length?[...st.log].reverse().map(l=>`<div class="row"><span>${new Date(l.t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span><b>+${l.ml} ml</b></div>`).join(''):'<div class="goal">还没有记录</div>';
+ $('goal').value=st.goal;$('rem').value=st.rem;
+}
+function add(ml){
+ if(st.date!==day()){st.date=day();st.log=[]}
+ st.log.push({ml,t:Date.now()});last=Date.now();save();render();
+ const e=document.createElement('div');e.className='pop';e.textContent='+'+ml+'ml';document.body.appendChild(e);setTimeout(()=>e.remove(),1000);
+ if(navigator.vibrate)try{navigator.vibrate(30)}catch(x){}
+}
+$('grid').innerHTML=SIZES.map(s=>`<button class="btn" data-ml="${s.ml}">${s.svg}<b>${s.ml} ml</b><span>${s.name}</span></button>`).join('');
+$('grid').onclick=e=>{const b=e.target.closest('.btn');if(b)add(+b.dataset.ml)};
+$('undo').onclick=()=>{st.log.pop();save();render()};
+$('reset').onclick=()=>{if(confirm('确定清零今天的记录吗？')){st.log=[];save();render()}};
+$('goal').onchange=e=>{st.goal=Math.max(500,Math.min(6000,+e.target.value||2000));save();render()};
+$('rem').onchange=e=>{st.rem=+e.target.value;last=Date.now();save();
+ if(st.rem&&'Notification' in window&&Notification.permission==='default')try{Notification.requestPermission()}catch(x){}
+ if(st.rem)toast('好的，每'+st.rem+'分钟提醒你喝水～');sched()};
+setInterval(()=>{if(st.rem&&Date.now()-last>=st.rem*60000){last=Date.now();
+ toast('🐶🐱 该喝水啦！');
+ try{if('Notification' in window&&Notification.permission==='granted')new Notification('汪喵喝水',{body:'该喝水啦～来一杯吧！'})}catch(x){}}},20000);
+async function sched(){const LN=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.LocalNotifications;if(!LN)return;
+try{let p=await LN.checkPermissions();if(p.display!=='granted'){p=await LN.requestPermissions();if(p.display!=='granted')return}
+const pend=await LN.getPending();if(pend.notifications.length)await LN.cancel({notifications:pend.notifications});
+if(!st.rem)return;const list=[];let id=1;
+for(let m=8*60;m<=22*60;m+=st.rem){list.push({id:id++,title:'汪喵喝水 🐶🐱',body:'该喝水啦～来一杯吧！',schedule:{on:{hour:Math.floor(m/60),minute:m%60},allowWhileIdle:true}})}
+await LN.schedule({notifications:list})}catch(e){}}
+load();render();sched();
+</script>
+</body>
+</html>
